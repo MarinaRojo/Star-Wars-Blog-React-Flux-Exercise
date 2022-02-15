@@ -2,6 +2,8 @@ import React,{useContext} from "react";
 import {Context} from "../store/appContext";
 import PropTypes from "prop-types";
 import { Link} from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
 export const Card= (props)=>{
 	const {store,actions}=useContext(Context);
@@ -14,7 +16,7 @@ export const Card= (props)=>{
 					<Link className="btn btn-primary bg-warning border border-light text-dark" to={`/details/${props.type}/${props.item.uid}`}>
 						More details
 					</Link>
-					<button className="btn btn-warning border border-light text-dark ms-2" onClick={()=> actions.add_favorites(props.item.name)}>Fav</button>
+					<button className="btn btn-warning border border-light text-dark ms-2" onClick={()=> actions.add_favorites(props.item.name)}><FontAwesomeIcon icon={faHeart}/></button>
 				</div>
 			
         </div>
