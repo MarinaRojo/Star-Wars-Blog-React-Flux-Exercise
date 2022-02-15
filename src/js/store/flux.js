@@ -15,11 +15,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			characters:[],
 			vehicles:[],
 			loading:false,
-			detail:{}
+			detail:{},
+			favorites:[]
 		},
 		actions: {
 			getAllPlanets: () => {
 					const store=getStore();
+					store.detail={};
 					store.planets=[];
 					store.loading=true;
 					getPlanets(swapiPlanets)
@@ -47,6 +49,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getAllCharacters:()=>{
 				const store=getStore();
 				store.characters=[];
+				store.detail={};
 				getCharacters(swapiCharacters)
 				.then(res => res.json())
 				.then(data => {
@@ -66,6 +69,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getAllVehicles:()=>{
 				const store=getStore();
 				store.vehicles=[];
+				store.detail={};
 				getVehicles(swapiVehicles)
 				.then(res => res.json())
 				.then(data =>{
@@ -83,8 +87,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			getItemDetail: (type,id) => {
-				const store=getStore();
-				console.log(`${swapiDetail}${type}/${id}`)
+				swapiPlanets="https://www.swapi.tech/api/planets/";
+				swapiVehicles="https://www.swapi.tech/api/vehicles/";
+				swapiCharacters="https://www.swapi.tech/api/people/";
 				getDetail(`${swapiDetail}${type}/${id}`)
 				.then(res => res.json())
 				.then(data =>{
@@ -95,6 +100,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				
 		},
+
+		add_favorites(item_name){
+			
+			const store=getStore();
+			setStore({...store,favorites:[...store.favorites, item_name]});
+			
+		},
+
+		delete_favorite(item_name){
+			const store=getStore();
+			const new_favs= store.favorites.filter((item)=>item!=item_name)
+			store.favorites=[];
+			new_favs.map((fav)=>{
+				setStore({...store,favorites:[...store.favorites,fav]});
+			})
+			
+		}
 		}
 	};
 };
